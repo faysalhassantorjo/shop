@@ -242,6 +242,7 @@
 		<!--/ End Header Inner -->
 	</header>
 	<!--/ End Header -->
+	{% if hero_slide %}
 
 	<section class="hero-slider">
 		<!-- Single Slider -->
@@ -256,13 +257,14 @@
 										<h1><span>UP TO {{hero_slide.special_discount}}% OFF </span>{{hero_slide.name}}</h1>
 										<!-- <p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find it pereri <br> odiy maboriosm.</p> -->
 										<div class="button">
-											{% if hero_slide %}
+									
 											<a href="{% url 'product_list' hero_slide.id %}" class="btn">Shop Now!</a>
 											
-											{% endif %}
+									
 										</div>
 									</div>
 								</div>
+						
 							</div>
 						</div>
 					</div>
@@ -272,7 +274,7 @@
 		<!--/ End Single Slider -->
 	</section>
 	<!--/ End Slider Area -->
-
+	{% endif %}
 		<!-- Start Product Area -->
     <div class="product-area section">
             <div class="container">
@@ -306,15 +308,17 @@
             </div>
     </div>
 	<!-- End Product Area -->
-
+	{% if special_discount %}
 	<!-- Start Midium Banner  -->
 	<section class="midium-banner  mt-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
+
 					<div class="section-title">
 						<h2>Special Discount</h2>
 					</div>
+			
 				</div>
 			</div>
 			<div class="row">
@@ -322,10 +326,10 @@
 				{% for special_discount in special_discounts %}
 				{% if special_discount is not hero_slide %}
 				<div class="col-lg-6 col-md-6 col-12">
-					<div class="single-banner" style="">
+					<div class="single-banner">
 						<img src="{{special_discount.imageURL}}" alt="#" style="width:600px; height: 370px;">
 						<div class="content">
-							<p>Man's Collectons</p>
+							<p>{{special_discount}} Collection's</p>
 							<h3>Man's items <br>Up to<span> {{special_discount.special_discount}}%</span></h3>
 							<a href="{% url 'product_list' special_discount.id %}">Shop Now</a>
 						</div>
@@ -339,7 +343,7 @@
 	</section>
 	<!-- End Midium Banner -->
 	
-
+	{% endif %}
 	
 	
 	
@@ -347,18 +351,20 @@
 	<section class="small-banner section">
 		<div class="container-fluid">
 			<div class="row">
+				{% if special_collection %}
 				<div class="col-12">
 					<div class="section-title mt-4">
 						<h2>New Collection</h2>
 					</div>
 				</div>
+				{% endif %}
 			</div>
 			<div class="row">
 				<!-- Single Banner  -->
 				{% for collection in special_collection %}
 				<div class="col-lg-6 col-md-6 col-12">
-					<div class="single-banner" style="height: 400px; overflow: hidden;">
-						<img src="{{collection.imageURL}}" alt="#" style="object-fit: cover;">
+					<div class="single-banner" style="height: 400px; ">
+						<img src="{{collection.imageURL}}" alt="#" style="object-fit: contain;">
 						<div class="content">
 							<p style="font-size: 2rem;">{{collection.name}}</p>
 							<!-- <h3>Summer travel <br> collection</h3> -->
