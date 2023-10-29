@@ -1,0 +1,45 @@
+{% extends 'myapp/base.html' %}
+{% load static %}
+
+{% block body %}
+
+<style>
+body{
+    background-color:black;
+}
+.orderinfo{
+    background-color: #2f2e2e;
+    padding :20px;
+    border-radius: 10px;
+}
+p,h3,h4{
+    color: #fff;
+}
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="mt-4 text-center">Orders</h3>
+            <div class="list-group mt-2">
+                {% for order in orders %}
+                <div class="orderinfo  mt-2">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h4 class="mb-3">Name: {{ order.order_by }}</h4>
+                            <p>Shipping Address: {{ order.shipping }}</p>
+                            <p>Order Item: {{ order.orderItem }}</p>
+                            <p>Total Tk: {{ order.total_tk }}</p>
+                            <p>Date: {{ order.date_added }}</p>
+                        </div>
+                        <div class="col-md-2 text-right">
+                            <a href="{% url 'delete' order.id %} " class="btn btn-success">Order Complete</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

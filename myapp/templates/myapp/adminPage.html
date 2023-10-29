@@ -1,0 +1,52 @@
+{% extends 'myapp/base.html' %}
+
+{% block body %}
+
+<style>
+  /* styles.css */
+
+.card1 {
+    background-color: #323232;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 300px;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-size: 40px;
+    font-weight: bold;
+    color: #ffffff;
+    font-family: 'Advent Pro', sans-serif;
+    margin-bottom:100px;
+}
+
+</style>
+
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-3">
+       <div class="card1">
+        <h2 class="card-title">View Order</h2>
+           <a href="{% url 'customerOrderView' %}" class="card-text btn btn-light " style=";">View Order</a>
+        </div>
+    </div>
+      <div class="col-lg-3">
+       <div class="card1">
+        <h2 class="card-title">Add Product</h2>
+           <a href="{% url 'customerOrderView' %}" class="card-text btn btn-light" style=";">Add Product</a>
+        </div>
+    </div>
+      <div class="col-lg-3">
+       <div class="card1">
+        <h2 class="card-title">Add Category</h2>
+           <a href="{% url 'customerOrderView' %}" class="card-text btn btn-light" style=";">Add Category</a>
+        </div>
+    </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,134 @@
+{% extends 'myapp/main.html' %}
+{% block body %}
+
+
+<style>
+    .message {
+        display: none;
+        padding: 10px;
+        background-color: #f74f06;
+        color: white;
+    }
+</style>
+{% if messages %}
+<div class="messages d-flex justify-content-center">
+    {% for message in messages %}
+    <div class="message" id="success-message">{{ message }}</div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<script>
+
+    var messageElement = document.getElementById("success-message");
+
+    messageElement.style.display = "block";
+
+    setTimeout(function() {
+        messageElement.style.display = "none";
+    }, 3000);
+</script>
+
+<style>
+    .ti-arrow-left{
+        display: none;
+    }
+    .ti-arrow-right{
+        display: none;
+    }
+    @media (max-width: 767px){
+        
+        /* .single-slider{
+            width: 100%;
+        }
+        .single-slider img{
+            width: 100%;
+        } */
+        .quickview-slider-active{
+            max-width: 100%;
+            margin-top: 50px;
+        }
+    }
+</style>
+    <div class="" style="margin-top: -100px;" >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+        
+                    <!-- <div class="modal-body"> -->
+                        <div class="row no-gutters">
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12 x">
+                                <!-- Product Slider -->
+									<div class="product-gallery">
+										<div class="quickview-slider-active">
+										
+											<div class="single-slider">
+												<img src="{{product.imageURL}}" alt="#"  >
+											</div>
+											<div class="single-slider">
+                                                {% if product.imageURL2 %}
+												<img src="{{product.imageURL2}}" alt="#">
+                                                {% else %}
+                                                <img src="{{product.imageURL}}" alt="#"  >
+                                                {% endif %}
+											</div>
+										</div>
+									</div>
+								<!-- End Product slider -->
+                            </div>
+                            <div class="col-lg-6 col-md-12 col-sm-12 col-xs-12 col-12">
+                                <div class="quickview-content">
+                                    <h2>{{product.name}}</h2>
+                                    <div class="quickview-ratting-review">
+                                        
+          								<!-- {% if product.instock <=  0 %} -->
+                                                 								<!-- {% endif %} -->
+                      					{% if product.instock > 0 %}
+                      					<div class="quickview-stock">
+                                            <span><i class="fa fa-uncheck-circle-o"></i> </span>
+                                        </div>
+                                        {% endif %}
+
+                                    </div>
+                                    <h3>{{product.price}}</h3>
+                                   <!-- <h3>{{product.discount_price}}</h3> -->
+                                    <div class="quickview-peragraph">
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Mollitia iste laborum ad impedit pariatur esse optio tempora sint ullam autem deleniti nam in quos qui nemo ipsum numquam.</p>
+                                    </div>
+									<div class="size">
+										<div class="row">
+											<div class="col-lg-6 col-12">
+												<h5 >Size</h5>
+												<select id="sizeSelect">
+													<option>s</option>
+													<option>m</option>
+													<option>l</option>
+													<option>xl</option>
+												</select>
+											</div>
+											
+										</div>
+									</div>
+                                    
+									<div class="add-to-cart">
+										 <button class="btn btn-dark update-cart" data-product="{{ product.id }}" data-action="add">
+       										<i class="me-1 fa fa-shopping-basket"></i> Add to cart
+   										 </button>
+									
+									</div>
+                                    <div class="default-social">
+										<h4 class="share-now">Share:</h4>
+                                        <ul>
+                                            <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
+                                            <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
+                                            <li><a class="youtube" href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                            <li><a class="dribbble" href="#"><i class="fa fa-google-plus"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+    </div>
+{% endblock %}

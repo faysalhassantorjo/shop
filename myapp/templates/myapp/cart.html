@@ -1,0 +1,248 @@
+
+<html>
+{% load static %}
+<head>
+<!--	    <link rel="stylesheet" href="{% static 'myapp/css/cartresponsible.css' %}">-->
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'myapp/css/nav.css'%}">
+
+
+
+<!--    <link rel="stylesheet" href="{% static 'myapp/css/cart.css' %}">-->
+<!--    <link rel="stylesheet" href="{% static 'myapp/css/cartresponsible.css' %}">-->
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="https://fonts.googleapis.com/css2?family=Yeseva+One&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Advent+Pro:wght@100;300&family=Sofia&display=swap" rel="stylesheet">
+
+    <style>
+@media (min-width: 1025px) {
+.h-custom {
+height: ;
+}
+}
+
+.card-registration .select-input.form-control[readonly]:not([disabled]) {
+font-size: 1rem;
+line-height: 2.15;
+padding-left: .75em;
+padding-right: .75em;
+}
+
+.card-registration .select-arrow {
+top: 13px;
+}
+
+.bg-grey {
+background-color: #eae8e8;
+}
+
+@media (min-width: 992px) {
+.card-registration-2 .bg-grey {
+border-top-right-radius: 16px;
+border-bottom-right-radius: 16px;
+}
+}
+
+@media (max-width: 991px) {
+.card-registration-2 .bg-grey {
+border-bottom-left-radius: 16px;
+border-bottom-right-radius: 16px;
+}
+}
+.fa-solid{
+    color: #000000;
+}
+</style>
+</head>
+<body>
+
+ <div class="container-fluid p-3 pt-2"  style="background:#2F2E2E">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-sm-4 col-4 col-md-4 col-lg-4 text-center" >
+                <a href="/" class="btn btn-dark p-2" ><i class="fa-solid fa-arrow-left" ></i>&nbsp;&nbsp;Category</a>
+            </div>
+            <div class="col-sm-4 col-4 col-md-4 col-lg-4  text-center">
+                <a href="/" style="text-decoration: none;font-size:2rem; color: #f74f06 ;font-family: 'Sofia', cursive;">Lonng</a>
+        </div>
+            <div class="col-sm-4 col-4 col-md-4 col-lg-4 text-center">
+                <div class="col" style="color: #fff;"> <a href="{% url 'cart' %}"> <i class="fas fa-shopping-cart" style="color: #fff;"></i></a>{{cartItems}}</div>
+            </div>
+        </div>
+    </div>
+
+	<!-- Shopping Cart -->
+<section class="" style="">
+  <div class="container py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-8">
+                <div class="p-5">
+                  <div class="d-flex justify-content-between align-items-center mb-5">
+                    <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                    <h6 class="mb-0 text-muted">{{order.get_cart_items}} items</h6>
+                  </div>
+                  <hr class="my-4">
+
+                    {% for item in items %}
+
+                  <div class="row mb-4 d-flex justify-content-between align-items-center">
+                    <div class="col-md-2 col-lg-2 col-xl-2">
+                      <img src="{{item.product.imageURL}}" class="img-fluid rounded-3" alt="">
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-3">
+                      <h6 class="text-black mb-0">{{item.product.name}}</h6>
+                      <h6 class="text-muted">{{item.size}}</h6>
+
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                      <button  class="btn btn-link px-2 update-cart" data-action="remove" data-size={{item.size}} data-product={{item.product.id}}>
+                                                <i class="fa-solid fa-minus"></i>
+                        </button>
+
+                       <p class="form-control form-control-sm input-number mt-2 pt-1 text-center" style="font-size: 24px;">{{item.quantity}}</p>
+
+                      <button  class="btn btn-link px-2 update-cart" data-action="add" data-size={{item.size}} data-product={{item.product.id}}>
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                    </div>
+                    <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                      <h6 class="mb-0">tk.{{item.get_total}}</h6>
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                      <a href="#!" class="text-muted"><i class="fas fa-times"></i></a>
+                    </div>
+                  </div>
+
+                  <hr class="my-4">
+
+                    {% endfor %}
+
+
+
+                  <div class="pt-5">
+                    <h6 class="mb-0"><a href="#!" class="text-body"><i
+                          class="fas fa-long-arrow-alt-left me-2"></i>Back to shop</a></h6>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4 bg-grey">
+                <div class="p-5">
+                  <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                  <hr class="my-4">
+
+                  <div class="d-flex justify-content-between mb-4">
+                    <h5 class="text-uppercase">items :{{order.get_cart_items}}</h5>
+                  </div>
+
+                  <!-- <h5 class="text-uppercase mb-3">Shipping</h5> -->
+
+                  <!-- <div class="mb-4 pb-2">
+                    <select class="select">
+                      <option value="1">Standard-Delivery- €5.00</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                      <option value="4">Four</option>
+                    </select>
+                  </div> -->
+                  <hr class="my-4">
+
+                  <div class="d-flex justify-content-between mb-5">
+                    <h5 class="text-uppercase">Total price</h5>
+                    <h5>{{order.get_cart_total}}Tk.</h5>
+                  </div>
+
+                  <a href="{% url 'checkout' %}" type="button" class="btn btn-dark btn-block btn-lg"
+                    data-mdb-ripple-color="dark">Checkout</a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+ <script>
+        		var user='{{request.user}}'
+		function getToken(name){
+			var cookieValue=null;
+			if(document.cookie && document.cookie !==''){
+				var cookies = document.cookie.split(';');
+				for(var i=0; i<cookies.length; i++){
+					var cookie=cookies[i].trim();
+					if(cookie.substring(0,name.length+1)==(name+'=')){
+						cookieValue=decodeURIComponent(cookie.substring(
+							name.length+1
+						));
+						break;
+					}
+				}
+			}
+			return cookieValue;
+		}
+		var csrftoken=getToken('csrftoken');
+
+    </script>
+<script>
+var updateBtns=document.getElementsByClassName('update-cart')
+
+
+// console.log('size',selectedSize); // Output the selected size to the console
+
+console.log(updateBtns.length)
+console.log("hello1")
+for( var i=0; i<updateBtns.length; i++){
+    updateBtns[i].addEventListener('click',function(){
+        var productId=this.dataset.product
+        var action=this.dataset.action
+        var selectedSize = this.dataset.size;
+        console.log("ProductId: ",productId,"Action: ",action,"size ",selectedSize)
+  var user = "{{ user.username }}";
+        console.log("user: ",user)
+        if(user=="AnonymousUser"){
+          console.log("I am anonymouseUser")
+        }
+        else{
+            updateUserOrder(productId,action,selectedSize)
+        }
+    })
+}
+
+function updateUserOrder(productId,action,selectedSize){
+    var url='/update_item/'
+    console.log('URL:',url)
+    fetch(url,{
+        method:'POST',
+        headers:{
+            'Content-Type':"application/json",
+            'X-CSRFToken':csrftoken,
+        },
+        body:JSON.stringify({'productID':productId,'action':action,'selectedSize':selectedSize})
+    })
+    .then((response)=>{
+        return response.json();
+    })
+    .then((data)=>{
+        console.log('data: ',data);
+        location.reload();
+    });
+}
+</script>
+<!--<script rel="stylesheet" src="{% static 'myapp/js3/cart.js' %}"></script>-->
+
+</body>
+</html>
+

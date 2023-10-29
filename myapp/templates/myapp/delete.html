@@ -1,0 +1,24 @@
+{% extends 'myapp/base.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Delete Customer Order</h1>
+            <p>Are you sure you want to delete the following order?</p>
+            <p><strong>Name:</strong> {{ order.order_by }}</p>
+            <p><strong>Customer Name:</strong> {{ order.customer_name }}</p>
+            <p><strong>Shipping:</strong> {{ order.shipping }}</p>
+            <p><strong>Order Item:</strong> {{ order.orderItem }}</p>
+            <p><strong>Total Tk:</strong> {{ order.total_tk }}</p>
+            <p><strong>Date Added:</strong> {{ order.date_added }}</p>
+
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success">Mark as done</button>
+                <a href="{% url 'customerOrderView' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
