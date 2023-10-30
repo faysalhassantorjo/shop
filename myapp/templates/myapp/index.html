@@ -63,6 +63,17 @@
 		var csrftoken=getToken('csrftoken');
 
     </script>
+	<style>
+		@media only screen and (max-width: 767px)
+{
+.header.shop .right-bar {
+    display: block;
+	margin-top: -30px;
+	padding: 10px;
+}
+
+}
+	</style>
 
 </head>
 <body>
@@ -82,31 +93,7 @@
 	<header class="header shop">
 		<!-- Topbar -->
 		<div class="topbar">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-4 col-md-12 col-12">
-						<!-- Top Left -->
-						<div class="top-left">
-							<ul class="list-main">
-								<li><i class="ti-headphone-alt"></i> 01323-426706</li>
-								<li><i class="ti-email"></i> 
-									longfashion2020@gmail.com</li>
-							</ul>
-						</div>
-						<!--/ End Top Left -->
-					</div>
-					<div class="col-lg-8 col-md-12 col-12">
-						<!-- Top Right -->
-						<div class="right-content">
-							<ul class="list-main">
-								<li><i class="ti-location-pin"></i><a href="https://maps.app.goo.gl/VgMg586RY6U3jNZ17"> Store location</a></li>
-								<li><i class="ti-power-off"></i><a href="login.html#">Login</a></li>
-							</ul>
-						</div>
-						<!-- End Top Right -->
-					</div>
-				</div>
-			</div>
+			
 		</div>
 		<!-- End Topbar -->
 		<div class="middle-inner">
@@ -214,20 +201,19 @@
 													<li class="active"><a href="#">Home</a></li>
 													<li><a href="#">Product</a></li>												
 													<li><a href="#">Service</a></li>
-													<li><a href="#">Shop<i class="ti-angle-down"></i><span class="new">New</span></a>
+													<li><a href="#">Shop<i class="ti-angle-down"></i></a>
 														<ul class="dropdown">
-															<li><a href="shop-grid.html">Shop Grid</a></li>
 															<li><a href="{% url 'cart' %}">Cart</a></li>
-															<li><a href="checkout.html">Checkout</a></li>
+															<li><a href="{% url 'checkout' %}">Checkout</a></li>
 														</ul>
 													</li>
-													<li><a href="#">Pages</a></li>									
-													<li><a href="#">Blog<i class="ti-angle-down"></i></a>
+													<li><a href="https://www.facebook.com/LONGGFASHION">Pages</a></li>									
+													<!-- <li><a href="#">Blog<i class="ti-angle-down"></i></a>
 														<ul class="dropdown">
 															<li><a href="blog-single-sidebar.html">Blog Single Sidebar</a></li>
 														</ul>
-													</li>
-													<li><a href="contact.html">Contact Us</a></li>
+													</li> -->
+													<li><a href="/">Contact Us</a></li>
 												</ul>
 										</div>
 									</div>
@@ -404,19 +390,17 @@
 								</a>
 								<div class="button-head">
 									<div class="product-action">
-										<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="#"><i class=" ti-eye"></i><span>Quick Shop</span></a>
-										<a title="Wishlist" href="#"><i class=" ti-heart "></i><span>Add to Wishlist</span></a>
-										<a title="Compare" href="#"><i class="ti-bar-chart-alt"></i><span>Add to Compare</span></a>
+										<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="{% url 'product' product.id %}"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+									
 									</div>
 									<div class="product-action-2">
-										<a title="Add to cart" href="#">Add to cart</a>
+										<a title="Add to cart" href="{% url 'product' product.id %}">Add to cart</a>
 									</div>
 								</div>
 							</div>
 							<div class="product-content">
-								<h3><a href="product-details.html">{{product.name}}</a></h3>
+								<span href="{% url 'product' product.id %}">{{product.name}}</span>
 								<div class="product-price">
-									<span class="old">{{product.name}}</span>
 									<span>{{product.price}}TK.</span>
 								</div>
 							</div>
