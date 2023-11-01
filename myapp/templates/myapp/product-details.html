@@ -108,13 +108,15 @@
 											
 										</div>
 									</div>
-                                    
+                      					{% if product.instock > 0 %}
+                
 									<div class="add-to-cart">
 										 <button class="btn btn-dark update-cart" data-product="{{ product.id }}" data-action="add">
        										<i class="me-1 fa fa-shopping-basket"></i> Add to cart
    										 </button>
 									
 									</div>
+                                    {% endif %}
                                     <div class="default-social">
 										<h4 class="share-now">Share:</h4>
                                         <ul>
