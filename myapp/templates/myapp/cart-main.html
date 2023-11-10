@@ -71,8 +71,8 @@
 				<div class="col-12">
 					<div class="bread-inner">
 						<ul class="bread-list">
-							<li><a href="index1.html">Home<i class="ti-arrow-right"></i></a></li>
-							<li class="active"><a href="blog-single.html">Cart</a></li>
+							<li><a href="/">Home<i class="ti-arrow-right"></i></a></li>
+							<li class="active"><a href="#">Cart</a></li>
 						</ul>
 					</div>
 				</div>
@@ -143,24 +143,21 @@
 						<div class="row">
 							<div class="col-lg-8 col-md-5 col-12">
 								<div class="left">
-									<div class="coupon">
-										<form action="#" target="_blank">
-											<input name="Coupon" placeholder="Enter Your Coupon">
+									<!-- <div class="coupon">
+										<form action="" method="POST">
+											{% csrf_token  %}
+											<input  name="coup" placeholder="Enter Your Coupon">
 											<button class="btn">Apply</button>
 										</form>
-									</div>
-									<div class="checkbox">
-										<label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Shipping (+10$)</label>
-									</div>
+									</div> -->
 								</div>
 							</div>
 							<div class="col-lg-4 col-md-7 col-12">
 								<div class="right">
 									<ul>
-										<li>Cart Subtotal<span>Tk. {{order.get_cart_total}}</span></li>
-										<li>Shipping<span>Free</span></li>
-										<li>You Save<span>$20.00</span></li>
-										<li class="last">You Pay<span>$310.00</span></li>
+										<li>Cart Subtotal<span>{{order.get_cart_total}}</span></li>
+										
+										<li class="last">You Pay<span>{{order.get_cart_total}}</span></li>
 									</ul>
 									<div class="button5">
 										<a href="{% url 'checkout' %}" class="btn">Checkout</a>

@@ -2,17 +2,93 @@
 
 {% block body %}
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous" />
+<style>
+  .message {
+      display: none;
+      padding: 10px;
+      background-color: #f74f06;
+      color: white;
+  }
+</style>
 {% if messages %}
-  <ul class="messages">
-    {% for message in messages %}
-      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-  </ul>
+<div class="messages d-flex justify-content-center">
+  {% for message in messages %}
+  <div class="message" id="success-message">{{ message }}</div>
+  {% endfor %}
+</div>
 {% endif %}
+
+<script>
+
+  var messageElement = document.getElementById("success-message");
+
+  messageElement.style.display = "block";
+
+  setTimeout(function() {
+      messageElement.style.display = "none";
+  }, 2000);
+</script>
+
+
+<style>
+  form {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  input[type="text"],
+  input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+      box-sizing: border-box;
+      outline: none; /* Remove default input focus outline */
+  }
+
+  button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+
+  button:hover {
+      background-color: #45a049;
+  }
+
+  .text-center {
+      text-align: center;
+  }
+
+  .mt-3 {
+      margin-top: 15px;
+  }
+
+  .nav-link {
+      text-decoration: none;
+      color: #f74f06;
+      display: inline-block;
+      margin-top: 10px;
+  }
+
+  .nav-link:hover {
+      text-decoration: underline;
+  }
+</style>
 
 
     <section class="mb-4 ">
-      <div class="container bg mt-5 pt-5">
+      <div class="container bg ">
         <div class="row">
           <div class="col-12 col-sm-7 col-md-6 m-auto">
             <div class="card border-0 shadow">
@@ -23,15 +99,15 @@
                 </svg>
                 <form action="register" method="POST">
                     {% csrf_token %}
-                <input type="text" class="form-control my-4 py-2" id="username" name="username" placeholder="Enter your name">
-                <input type="email" class="form-control my-4 py-2" id="email" name="email" placeholder="Enter your email">
-                <input type="password" class="form-control my-4 py-2" id="password" name="pass" placeholder="Password">
-                <input type="password" class="form-control my-4 py-2" id="password2" name="pass2" placeholder="Repeat the password">
+                <input type="text" class="form-control my-4 py-2" id="username" name="username" placeholder="Enter your name" required>
+                <input type="text" class="form-control my-4 py-2" id="email" name="email" placeholder="Enter your email" required>
+                <input type="password" class="form-control my-4 py-2" id="password" name="pass" placeholder="Password" required>
+                <input type="password" class="form-control my-4 py-2" id="password2" name="pass2" placeholder="Repeat the password" required>
 
                   <div class="text-center mt-3">
-                <button type="submit" class="btn btn-success">Register</button>
+                <button type="submit" class="btn btn-dark">Register</button>
 
-                    <a href="{% url 'register' %}" class="nav-link">create account</a>
+                <a href="{% url 'register' %}" class="nav-link">Already have an account? <span style="color: #f74f06">login</span></a>
                   </div>
                 </form>
               </div>

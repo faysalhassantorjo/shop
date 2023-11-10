@@ -6,6 +6,11 @@
 		display: none;
 	}
 </style>
+
+<!-- Include SweetAlert2 CSS and JS in your HTML file -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <div class="container">
 
 		<!-- Start Checkout -->
@@ -170,26 +175,39 @@
 
 
 				var url = '/process_order/';
-				fetch(url, {
-					method: 'POST',
-					headers: {
-					  'Content-Type': 'application/json',
-					  'X-CSRFToken': csrftoken
-					},
+fetch(url, {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+    },
+    body: JSON.stringify({
+        'form': userFormData,
+        'shipping': shippingInfo
+    })
+})
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("success", data);
 
-					body: JSON.stringify({
-					  'form': userFormData,
-					  'shipping': shippingInfo
-					})
-				  })
-				  .then((response) => response.json())
-				  .then((data) => {
-					console.log("success", data);
-					alert("transaction completed");
-					cart={}
-					document.cookie='cart=' +JSON.stringify(cart)+ ";domain=;path=/"
-					window.location.href = "/";
-				  });
+        Swal.fire({
+            icon: 'success',
+            title: 'Order Completed',
+			text: 'Your order has been successfully completed! An email has been sent to your inbox.',
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+            },
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Clear the cart and redirect to the home page
+                cart = {};
+                document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/";
+                window.location.href = "/";
+            }
+        });
+    });
+
 			  }
 
 		</script>

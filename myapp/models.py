@@ -73,6 +73,8 @@ class Order(models.Model):
     date_order = models.DateTimeField(default=datetime.now, db_index=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
     transaction_id = models.CharField(max_length=200, null=True)
+    any_coupon=models.BooleanField(default=False,null=True,blank=False)
+    after_using_coupn=models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.customer.name)
@@ -84,15 +86,21 @@ class Order(models.Model):
 
     @property
     def get_cart_total(self):
+     
         orederitems = self.orderitem_set.all()
         total = sum(item.get_total for item in orederitems)
         return total
+    def coupon_uses_total(self):
+            if self.after_using_coupn and self.any_coupon:
+                return self.after_using_coupn
 
     @property
     def get_cart_items(self):
         orederitems = self.orderitem_set.all()
         total = sum(item.quantity for item in orederitems)
         return total
+
+    
 
 
 class OrderItem(models.Model):
@@ -123,6 +131,7 @@ class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     oder = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     address = models.CharField(max_length=100)
+    email=models.EmailField(null=True)
     phonNumber = models.CharField(max_length=100)
     date_added = models.DateTimeField(default=datetime.now)
 
@@ -141,3 +150,7 @@ class CustomerOrder(models.Model):
 
     def __str__(self):
         return f'Order No: {self.id}'
+    
+class Cuppon(models.Model):
+    cuppon_name=models.CharField(max_length=10)
+    percent=models.PositiveIntegerField(default=0)

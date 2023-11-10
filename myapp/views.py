@@ -176,6 +176,7 @@ def updatCartItem(request):
 
 import datetime
 from django.views.decorators.csrf import csrf_exempt
+from django.core.mail import EmailMessage
 @csrf_exempt
 def processOrder(request):
     Data = cartData(request)
@@ -191,6 +192,7 @@ def processOrder(request):
             customer = request.user.customer
             address= data['shipping']['address']
             phon_number= data['shipping']['phon-number']
+            email=data['shipping']['email-address']
             total=data['form']['total']
 
             order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -209,16 +211,48 @@ def processOrder(request):
 
 
             for i in orderItems:
-                a.append(f'Product Name: {i.product.name} Quantity: {i.quantity} Size: {i.size}')
-                a.append("\n")
+                a.append(f'Product Name: {i.product.name}   Quantity: {i.quantity}   Size: {i.size}')
 
-            htmlstring=str(a)
-            customorder = htmlstring.replace('\n', '<br>')
+            htmlstring=a
+            customorder = htmlstring
             print(customorder)
             name=request.user.username
             customerOrder = CustomerOrder(order_by=order,customer_name=name, shipping=shipping,total_tk=total,orderItem=customorder)
             # customerOrder.orderItems.add(items)
             customerOrder.save()
+            
+
+            your_order = "<br>"
+            for index, item in enumerate(customorder):
+                your_order += f'{index+1}: {item}<br>'
+
+            email_subject = "Your Order is Completed"
+            email_body = f"""
+                Hi {request.user.customer.name},<br><br>
+                We are thrilled to inform you that your order has been successfully processed!<br><br>
+                <strong>Your Order Details:</strong><br>
+                {your_order}<br>
+                <strong>Total Amount:</strong> {data['form']['total']} Tk.<br><br>
+                <strong>Payment Information:</strong><br>
+                Please make the payment at your earliest convenience to ensure a smooth delivery process.<br><br>
+                Thank you for choosing us! Your satisfaction is our priority.<br>
+                If you have any questions or concerns, feel free to reach out to us on our <a href="https://web.facebook.com/LONGGFASHION">Longg : লং </a>.<br><br>
+                Best regards,<br>
+                Longg : লং <br>
+                01323-426706<br>
+                https://web.facebook.com/LONGGFASHION
+            """
+
+            email = EmailMessage(
+                email_subject,
+                email_body,
+                'faysalhassantorjo8@gmail.com',
+                [f'{email}'],
+            )
+            email.content_subtype = 'html'
+            email.send()
+
+
 
 
     total = float(data['form']['total'])
@@ -229,6 +263,7 @@ def processOrder(request):
     order.save()
     print('data',data)
 
+   
     return JsonResponse('Payment complete',safe=False)
 
 def register(request):
