@@ -272,24 +272,90 @@
 							<h2>All Category</h2>
 						</div>
 					</div>
+					
 				</div>
+
+<style>
+					/* Bootstrap Button Styles */
+.x {
+  display: inline-block;
+  font-weight: 400;
+  color: #007bff;
+  text-align: center;
+  vertical-align: middle;
+  user-select: none;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  /* Button Hover State */
+  &:hover {
+    color: #0056b3;
+    text-decoration: none;
+  }
+}
+
+/* Bootstrap Outline Button Styles */
+.y {
+  color: #343a40;
+  background-color: transparent;
+  background-image: none;
+  border-color: #343a40;
+
+  /* Outline Button Hover State */
+  &:hover {
+    color: #fff;
+    background-color: #343a40;
+    border-color: #343a40;
+  }
+}
+
+.card-img-top{
+	height: 350px;
+	object-fit: cover;
+}
+.containe {
+  position: relative;
+}
+
+.centerq {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  background-color: #000000;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  opacity: .5;
+  color: #fff;
+}
+.card-title{
+	font-size: 2rem;
+}
+
+</style>
 				<div class="row">
 					<div class="col-12">
-						<div class="product-info">
-							<div class="nav-main">
-								<!-- Tab Nav -->
-
-
-							<ul class="nav nav-tabs" role="tablist">
-							    {% for category in categories %}
-							        <li class="nav-item {% if forloop.first %} active {% endif %}">
-							            <a class="nav-link" data-toggle="" href="{% url 'product_list' category.id %}" role="tab" id="tab-{{ category.id }}">{{ category }}</a>
-							        </li>
-							    {% endfor %}
-							</ul>
-
-								<!--/ End Tab Nav -->
+						<div class="row">
+							{% for category in categories %}
+							<div class="col-lg-3">
+								<div class="card" style="width: 18rem;">
+									<div class="containe">
+									<img class="card-img-top" src="{{category.imageURL}}" alt="Card image cap" width="100%">
+									<div class="centerq"><h5 class="card-title text-center">{{ category }}</h5></div>
+									</div>
+									<div class="card-body text-center">		  
+									  <a href="{% url 'product_list' category.id %}" class="x y">Explore</a>
+									</div>
+								  </div>
 							</div>
+							{% endfor %}
 						</div>
 					</div>
 				</div>
@@ -400,10 +466,10 @@
 									</div>
 								</div>
 							</div>
-							<div class="product-content">
+							<div class="product-content text-center">
 								<span href="{% url 'product' product.id %}">{{product.name}}</span>
 								<div class="product-price">
-									<span>{{product.price}}TK.</span>
+									<span><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.price}}</span>
 								</div>
 							</div>
 						</div>

@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
+import json
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -144,13 +145,19 @@ class CustomerOrder(models.Model):
     orderItems = models.ManyToManyField(OrderItem,  blank=True)
     customer_name=models.CharField(max_length=100)
     shipping = models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, blank=True, null=True)
-    orderItem = models.TextField()
+    # orderItem = models.CharField(max_length=500) 
     total_tk=models.CharField(max_length=100)
     date_added = models.DateTimeField(default=datetime.now)
-
+    twoDAr=models.CharField(default=None,blank=True,max_length=500)
     def __str__(self):
         return f'Order No: {self.id}'
-    
+    def set_two_d_array(self, array):
+        self.twoDAr = json.dumps(array)
+
+    def get_two_d_array(self):
+        return json.loads(self.twoDAr)
+
+
 class Cuppon(models.Model):
     cuppon_name=models.CharField(max_length=10)
     percent=models.PositiveIntegerField(default=0)

@@ -206,21 +206,23 @@ def processOrder(request):
 
 
             # o1=Order.objects.get(customer=customer,transaction_id=transaction_id)
-            a=[]
+            a = []
+            orderdProduct = []
             orderItems = OrderItem.objects.filter(order=order)
 
-
             for i in orderItems:
-                a.append(f'Product Name: {i.product.name}   Quantity: {i.quantity}   Size: {i.size}')
+                a = [i.product.name, f'{i.quantity}', i.size, i.get_total,i.product.imageURL]
+                orderdProduct.append(a)
 
-            htmlstring=a
-            customorder = htmlstring
-            print(customorder)
-            name=request.user.username
-            customerOrder = CustomerOrder(order_by=order,customer_name=name, shipping=shipping,total_tk=total,orderItem=customorder)
-            # customerOrder.orderItems.add(items)
+            customorder = orderdProduct
+            print("Customer Order:   ",customorder)
+            name = request.user.username
+
+            # Create a CustomerOrder instance and set the orderItem field
+            customerOrder = CustomerOrder(order_by=order, customer_name=name, shipping=shipping, total_tk=total)
+            customerOrder.set_two_d_array(customorder)
             customerOrder.save()
-            
+
 
             your_order = "<br>"
             for index, item in enumerate(customorder):
@@ -315,7 +317,14 @@ def logout(request):
 
 @admin_only
 def customerOrderView(request):
-    orders = CustomerOrder.objects.all()
+    orders = CustomerOrder.objects.all().order_by('-date_added')
+    for order in orders:
+            l = order.get_two_d_array()
+            
+            print(type(l))
+        
+
+
     return render(request, 'myapp/customerOrder.html', {'orders': orders})
 
 from django.shortcuts import get_object_or_404

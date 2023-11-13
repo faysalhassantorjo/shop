@@ -1213,8 +1213,7 @@ Version:1.0
 	overflow: hidden;
 }
 .hero-slider .single-slider {
-	height: auto;
-	
+	max-width: 100%;	
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;

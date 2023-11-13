@@ -4,17 +4,33 @@
 {% block body %}
 
 <style>
-body{
-    background-color:black;
-}
-.orderinfo{
-    background-color: #2f2e2e;
-    padding :20px;
-    border-radius: 10px;
-}
-p,h3,h4{
-    color: #fff;
-}
+    body {
+        background-color: black;
+    }
+
+    .orderinfo {
+        background-color: #2f2e2e;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #4f4f4f;
+        margin-bottom: 10px;
+    }
+
+    p, h3, h4 {
+        color: #fff;
+    }
+
+    .order-details {
+        margin-top: 10px;
+    }
+
+    .product-info {
+        margin-top: 10px;
+    }
+
+    .btn-order-complete {
+        margin-top: 10px;
+    }
 </style>
 
 <div class="container">
@@ -23,17 +39,58 @@ p,h3,h4{
             <h3 class="mt-4 text-center">Orders</h3>
             <div class="list-group mt-2">
                 {% for order in orders %}
-                <div class="orderinfo  mt-2">
+                <div class="orderinfo mt-2">
                     <div class="row">
                         <div class="col-md-10">
-                            <h4 class="mb-3">Name: {{ order.order_by }}</h4>
-                            <p>Shipping Address: {{ order.shipping }}</p>
-                            <p>Order Item: {{ order.orderItem }}</p>
-                            <p>Total Tk: {{ order.total_tk }}</p>
+                            <table class="table table-bordered"  >
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Address</th>
+                                        <th>Phone Number</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>{{ order.order_by }}</td>
+                                        <td>{{ order.shipping }}</td>
+                                        <td>
+                                            <h4></h4> <!-- Add phone number here -->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Product Image</th>
+                                        <th>Product Name</th>
+                                        <th>Product Quantity</th>
+                                        <th>Selected Size</th>
+                                        <th>Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for orderItem in order.get_two_d_array %}
+                                    <tr>
+                                        <td>  <img src="{{ orderItem.4 }}" style="height: auto;width: 50px;"> </td>
+                                        <td>{{ orderItem.0 }}</td>
+                                        <td>{{ orderItem.1 }}</td>
+                                        <td>{{ orderItem.2 }}</td>
+                                        <td>{{ orderItem.3 }} </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            
+                            <p><strong>Total Tk: </strong> <span style="color: #f74f06;">{{ order.total_tk }}</span></p>
                             <p>Date: {{ order.date_added }}</p>
+                            <p>{{ order.date_added|timesince }} ago</p>
+                            
                         </div>
                         <div class="col-md-2 text-right">
-                            <a href="{% url 'delete' order.id %} " class="btn btn-success">Order Complete</a>
+                            <a href="{% url 'delete' order.id %} " class="btn btn-outline-primary btn-order-complete">Order Complete</a>
                         </div>
                     </div>
                 </div>

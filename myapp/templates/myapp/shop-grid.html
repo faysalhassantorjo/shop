@@ -59,11 +59,10 @@
 											</div>
 										</div>
 									</div>
-									<div class="product-content">
-										<h3><a href="product-details.html">{{product.name}}</a></h3>
+									<div class="product-content text-center">
+										<h3><a href="{% url 'product' product.id %} ">{{product.name}}</a></h3>
 										<div class="product-price">
-											<span>{{product.price}}</span>
-											<span>{{product.discount_price}}</span>
+											<span><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{product.price}}</span>
 
 										</div>
 									</div>
