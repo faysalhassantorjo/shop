@@ -230,20 +230,44 @@ def processOrder(request):
 
             email_subject = "Your Order is Completed"
             email_body = f"""
-                Hi {request.user.customer.name},<br><br>
-                We are thrilled to inform you that your order has been successfully processed!<br><br>
-                <strong>Your Order Details:</strong><br>
-                {your_order}<br>
-                <strong>Total Amount:</strong> {data['form']['total']} Tk.<br><br>
-                <strong>Payment Information:</strong><br>
-                Please make the payment at your earliest convenience to ensure a smooth delivery process.<br><br>
-                Thank you for choosing us! Your satisfaction is our priority.<br>
-                If you have any questions or concerns, feel free to reach out to us on our <a href="https://web.facebook.com/LONGGFASHION">Longg : লং </a>.<br><br>
-                Best regards,<br>
-                Longg : লং <br>
-                01323-426706<br>
-                https://web.facebook.com/LONGGFASHION
-            """
+    Hi {request.user.customer.name},<br><br>
+    We are thrilled to inform you that your order has been successfully processed!<br><br>
+    <strong>Your Order Details:</strong><br>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Product Image</th>
+                <th>Product Name</th>
+                <th>Product Quantity</th>
+                <th>Selected Size</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{% for orderItem in customerOrder %}}
+            <tr>
+                <td>  <img src="{{{{ orderItem.4 }}}} " style="height: auto;width: 50px;"> </td>
+                <td>{{{{ orderItem.0 }}}} </td>
+                <td>{{{{ orderItem.1 }}}} </td>
+                <td>{{{{ orderItem.2 }}}} </td>
+                <td>{{{{ orderItem.3 }}}} </td>
+            </tr>
+            {{% endfor %}}
+        </tbody>
+    </table>
+
+    <strong>Total Amount:</strong> {{{{ data['form']['total'] }}}} Tk.<br><br>
+    <strong>Payment Information:</strong><br>
+    Please make the payment at your earliest convenience to ensure a smooth delivery process.<br><br>
+    Thank you for choosing us! Your satisfaction is our priority.<br>
+    If you have any questions or concerns, feel free to reach out to us on our <a href="https://web.facebook.com/LONGGFASHION">Longg : লং </a>.<br><br>
+    Best regards,<br>
+    Longg : লং <br>
+    01323-426706<br>
+    https://web.facebook.com/LONGGFASHION
+"""
+
 
             email = EmailMessage(
                 email_subject,
