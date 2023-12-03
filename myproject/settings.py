@@ -109,8 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 CSRF_TRUSTED_ORIGINS = [
-    'https://your-base-domain'
+    'https://web-production-d05b5.up.railway.app',
 ]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
