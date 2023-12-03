@@ -109,21 +109,21 @@
 						<!--/ End Logo -->
 						<!-- Search Form -->
 						<div class="search-top">
-							<div class="top-search"><a href="#0"><i class="ti-search"></i></a></div>
+							<!-- <div class="top-search"><a href="#0"><i class="ti-search"></i></a></div> -->
 							<!-- Search Form -->
-							<div class="search-top">
+							<!-- <div class="search-top">
 								<form class="search-form">
 									<input type="text" placeholder="Search here..." name="search">
 									<button value="search" type="submit"><i class="ti-search"></i></button>
 								</form>
-							</div>
+							</div> -->
 							<!--/ End Search Form -->
 						</div>
 						<!--/ End Search Form -->
 						<div class="mobile-nav"></div>
 					</div>
 					<div class="col-lg-8 col-md-7 col-12">
-						<div class="search-bar-top">
+						<!-- <div class="search-bar-top">
 							<div class="search-bar">
 								
 								<form>
@@ -132,14 +132,17 @@
 								</form>
 								
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
 							<!-- Search Form -->
+							{% if user %}
 							<div class="sinlge-bar">
 								<span>hello <span style="color: #f74f06;">{{user}}!</span></span>
 							</div>
+							{% endif %}
+						
 							
 							<div class="sinlge-bar shopping">
 								<a href="{% url 'cart' %}" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{cartItems}}</span></a>
@@ -186,9 +189,11 @@
 								<h3 class="cat-heading"><i class="fa fa-bars" aria-hidden="true"></i>CATEGORIES</h3>
 								<ul class="main-category">
 									{% for category in categories %}
+									{% if not category.hero_slide %}
 									<li><a href="{% url 'product_list' category.id %}">{{category}} <i class="fa fa-angle-right" aria-hidden="true"></i></a>
 
 									</li>
+									{%endif%}
 									{% endfor %}
 								</ul>
 							</div>
@@ -241,15 +246,15 @@
 						<div class="text-inner">
 							<div class="row">
 								<div class="col-lg-7 col-12">
-									<!-- <div class="hero-text"> -->
-										<!-- <h1><span>UP TO {{hero_slide.special_discount}}% OFF </span>{{hero_slide.name}}</h1> -->
-										<!-- <p>Maboriosam in a nesciung eget magnae <br> dapibus disting tloctio in the find it pereri <br> odiy maboriosm.</p> -->
-										<!-- <div class="button">
+									<div class="hero-text"> 
+								 <h1><span style="color: #fff;">Explore Our New Collection </span>{{hero_slide.name}}</h1>
+									
+										<div class="button">
 									
 											<a href="{% url 'product_list' hero_slide.id %}" class="btn">Shop Now!</a>
 											
 									
-										</div> -->
+										</div> 
 									</div>
 								</div>
 						
@@ -266,6 +271,7 @@
 		<!-- Start Product Area -->
     <div class="product-area section">
             <div class="container">
+				{% if categories %}
 				<div class="row">
 					<div class="col-12">
 						<div class="section-title">
@@ -274,6 +280,7 @@
 					</div>
 					
 				</div>
+				{% endif %}
 
 <style>
 					/* Bootstrap Button Styles */
@@ -306,7 +313,7 @@
   background-image: none;
   border-color: #343a40;
 
-  /* Outline Button Hover State */
+
   &:hover {
     color: #fff;
     background-color: #343a40;
@@ -336,7 +343,14 @@
   color: #fff;
 }
 .card-title{
-	font-size: 2rem;
+	font-size: 3rem;
+
+}
+@media (max-width: 576px) {
+
+    .col-lg-3 {
+        width: 100%;
+    }
 }
 
 </style>
@@ -344,17 +358,20 @@
 					<div class="col-12">
 						<div class="row">
 							{% for category in categories %}
-							<div class="col-lg-3">
-								<div class="card" style="width: 18rem;">
-									<div class="containe">
-									<img class="card-img-top" src="{{category.imageURL}}" alt="Card image cap" width="100%">
+							{% if not category.hero_slide %}
+							<div class="col-lg-3 col-md-4 col-sm-6 col-12 mt-2">
+
+								<div style="width: auto ;">
+									<a href="{% url 'product_list' category.id %}"><div class="containe">
+										<img class="card-img-top img-fluid" src="{{ category.imageURL }}" alt="Card image cap" width="100%">
+
 									<div class="centerq"><h5 class="card-title text-center">{{ category }}</h5></div>
 									</div>
-									<div class="card-body text-center">		  
-									  <a href="{% url 'product_list' category.id %}" class="x y">Explore</a>
-									</div>
+								</a>
+								
 								  </div>
 							</div>
+							{% endif %}
 							{% endfor %}
 						</div>
 					</div>
@@ -437,6 +454,7 @@
 	<!-- Start Most Popular -->
 	<div class="product-area most-popular section">
         <div class="container">
+			{% if products %}
             <div class="row">
 				<div class="col-12">
 					<div class="section-title">
@@ -444,6 +462,7 @@
 					</div>
 				</div>
             </div>
+			{% endif %}
             <div class="row">
                 <div class="col-12">
                     <div class="owl-carousel popular-slider">
@@ -563,12 +582,12 @@
 					<div class="row">
 						<div class="col-lg-6 col-12">
 							<div class="left">
-								<p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  All Rights Reserved.</p>
+								<p>Copyright © 2020 <a href="http://www.wpthemesgrid.com" target="_blank">Wpthemesgrid</a>  -  Some Frontend Rights Reserved.</p>
 							</div>
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<img src="images/payments.png" alt="#">
+								<!-- <img src="images/payments.png" alt="#"> -->
 							</div>
 						</div>
 					</div>
