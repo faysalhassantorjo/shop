@@ -370,3 +370,33 @@ def delete_customer_order(request, pk):
 
 def adminPage(request):
     return render(request,'myapp/adminPage.html')
+
+
+from .form import AddProductForm,AddCategoryForm
+def addProduct(request):
+    if request.method == 'POST':
+        form = AddProductForm(request.POST,request.FILES)
+        form.save()
+        return redirect('index')
+    else:
+        form =AddProductForm()
+    
+    context={
+        'form':form,
+    }
+    return render(request,'myapp/AddProduct.html',context)
+
+def addCategory(request):
+    if request.method == 'POST':
+        form = AddCategoryForm(request.POST,request.FILES)
+        form.save()
+        return redirect('index')
+    else:
+        form =AddCategoryForm()
+    
+    context={
+        'form':form,
+        'hi':'hi'
+    }
+    return render(request,'myapp/AddCategory.html',context)
+

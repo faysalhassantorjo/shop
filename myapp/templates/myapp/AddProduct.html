@@ -1,6 +1,103 @@
-<form method="post">
-    {% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy4Ck3R5Bd5FPr3a5eeELI4Ld1FqWQ8U" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
 
-    {{ form.name }}
-    <button type="submit">Add Product</button>
-</form>
+        .centered-form {
+            margin-top: 50px;
+        }
+
+        .centered-form form {
+            padding: 20px;
+            border: 1px solid #dce0e2;
+            border-radius: 5px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .btn-outline-success {
+            background-color: #28a745;
+            color: #ffffff;
+        }
+
+        .centered-form form {
+            margin-bottom: 20px;
+        }
+
+        /* Optional: Add some spacing between form fields */
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+    <title>Your Form</title>
+</head>
+<body>
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="centered-form">
+            <form method="post" enctype="multipart/form-data" class="my-4">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_field1">Name</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label for="id_field2">Category</label>
+                    {{ form.category }}
+                </div>
+                <div class="form-group">
+                    <label for="id_field2">Description</label>
+                    {{ form.description }}
+                </div>
+                <div class="form-group">
+                    <label for="id_field2">Image</label>
+                    {{ form.image }}
+                </div>
+                <div class="form-group">
+                    <label for="id_field2">Image2</label>
+                    {{ form.image2 }}
+                </div>
+                <div class="form-group">
+                    <label for="id_field2">Is Hot Product</label>
+                    {{ form.hot_product }}
+                </div>
+                <div class="form-group">
+                    <label for="id_field2">Price</label>
+                    {{ form.price }}
+                </div>
+                <div class="form-group">
+                    <label for="id_field2">In Stock</label>
+                    {{ form.instock }}
+                </div>
+                <button type="submit" class="btn btn-outline-success">Add Product</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-eMNh6yD6mztK8q1AC6j3AsRPFRK6QlRtpiMAFco2bXs4U6FbEkRRvMz9aDHcGYVT" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy4Ck3R5Bd5FPr3a5eeELI4Ld1FqWQ8U" crossorigin="anonymous"></script>
+</body>
+</html>

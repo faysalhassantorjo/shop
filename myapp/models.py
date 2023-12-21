@@ -29,7 +29,8 @@ class Category(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    description=models.CharField(default="",max_length=200)
+    description=models.TextField(null=True,blank=True)
+
     image = models.ImageField(null=True, blank=True)
     image2 = models.ImageField(null=True, blank=True)
     hot_product=models.BooleanField(default=False,null=True, blank=False)
