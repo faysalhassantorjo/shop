@@ -110,6 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-d05b5.up.railway.app',
+    'https://longg.up.railway.app'
 ]
 
 
