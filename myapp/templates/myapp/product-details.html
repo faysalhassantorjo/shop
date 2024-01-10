@@ -93,8 +93,12 @@
 
 
                                     </div>
-                                    <h3><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.price}} </h3>
-                                   <!-- <h3>{{product.discount_price}}</h3> -->
+                                   {% if product.discount_percent %}
+                                   <del><span><i class="fa-solid fa-bangladeshi-taka-sign" style="font-size: 1rem;"></i> {{product.update_price}} </span></del>&nbsp;
+                                       {% endif %}
+                                    <span style="color: #f74f06; font-size: 1.5rem;"><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.price}}</span>
+
+
                         
                                     <div class="quickview-peragraph">
                                         <p>{{ product.description|linebreaksbr }}</p>

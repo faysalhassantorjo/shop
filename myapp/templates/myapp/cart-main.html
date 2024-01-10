@@ -143,21 +143,28 @@
 						<div class="row">
 							<div class="col-lg-8 col-md-5 col-12">
 								<div class="left">
-									<!-- <div class="coupon">
-										<form action="" method="POST">
+									<div class="coupon">
+										<form action="" method="POST" action="{% url 'cart' %}">
 											{% csrf_token  %}
-											<input  name="coup" placeholder="Enter Your Coupon">
+											<input  name="q" placeholder="Enter Your Coupon">
 											<button class="btn">Apply</button>
 										</form>
-									</div> -->
+									</div>
+								
+										
 								</div>
 							</div>
 							<div class="col-lg-4 col-md-7 col-12">
 								<div class="right">
 									<ul>
-										<li>Cart Subtotal<span><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{order.get_cart_total}}</span></li>
+										<li>Cart Total Items<span><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{order.get_cart_items}}</span></li>
 										
-										<li class="last">You Pay<span><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{order.get_cart_total}}</span></li>
+										<li class="last">Sub Total<span><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{order.total}}TK.</span></li>
+										{% if order.after_using_coupn %}
+										<li class="last">Saves<span><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{save}}Tk.</span></li>
+										{% endif %}
+
+										<li class="last">You Pay<span><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{order.coupon_uses_total}}TK.</span></li>
 									</ul>
 									<div class="button5">
 										<a href="{% url 'checkout' %}" class="btn">Checkout</a>

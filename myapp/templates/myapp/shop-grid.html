@@ -44,13 +44,24 @@
 							<div class="col-lg-4 col-md-6 col-6">
 								<div class="single-product">
 									<div class="product-img">
-										<a href="{% url 'product' product.id %} ">
-											<img class="default-img" src="{{product.imageURL}}" alt="#">
-											<img class="hover-img" src="{{product.imageURL}}" alt="#">
-										</a>
+										
+								<a href="{% url 'product' product.id %}">
+
+									<img class="default-img" src="{{product.imageURL}}" alt="#">
+									{% if product.imageURL2 %}
+									<img class="hover-img" src="{{product.imageURL2}}" alt="#">
+									{% endif %}
+									{% if product.instock %}
+									{% if product.discount_percent %}
+									<span class="new">{{product.discount_percent}}% off</span>
+									{%endif%}
+									{% else %}
+									<span class="out-of-stock">Out of Stock</span>
+									{% endif %}
+								</a>
 										<div class="button-head">
 											<div class="product-action">
-												<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="{% url 'product' product.id %} "><i class=" ti-eye"></i><span>Quick Shop</span></a>
+												<!-- <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="{% url 'product' product.id %} "><i class=" ti-eye"></i><span>Quick Shop</span></a> -->
 												
 
 											</div>
@@ -62,9 +73,14 @@
 									<div class="product-content text-center">
 										<h3><a href="{% url 'product' product.id %} ">{{product.name}}</a></h3>
 										<div class="product-price">
-											<span><i class="fa-solid fa-bangladeshi-taka-sign"></i> {{product.price}}</span>
-
+											{% if product.discount_percent %}
+										<del>	<span><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.update_price}}</span></del>&nbsp;&nbsp;
+											{% endif %}
+											<span style="font-size: 1.1rem;"><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.price}}</span>
+		
+		
 										</div>
+		
 									</div>
 								</div>
 							</div>

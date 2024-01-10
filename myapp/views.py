@@ -16,30 +16,28 @@ from django.template.loader import get_template
 def index(request):
     categories = Category.objects.all()
     products = Product.objects.filter(hot_product=True)
+    discounted_product = Product.objects.filter(discount_percent__gt=30)
     special_collection=Category.objects.filter(special_collection=True)
-    special_discount=Category.objects.filter(any_special_discount=True)
+    special_discount =Category.objects.filter(any_special_discount=True)
+    hero=Category.objects.get(hero_slide=True)
 
-    hero={}
-    for i in special_discount:
-        if i.hero_slide:
-            hero=i
-
+    print('asdf',len(special_discount))
+    for banner in special_discount:
+        print('banner name',banner.name)
+        for product in discounted_product:
+            if banner.superCategory and product.superCategory ==None:
+                continue
+            if banner.superCategory==product.superCategory:
+                product.category.add(banner)
+ 
+    
 
     Data = cartData(request)
     cartItems = Data['cartItems']
     items = Data['items']
     order = Data['order']
 
-    for product in products:
-        if product.discount:
-            discount_price = product.price * product.discount_percent / 100
-            price = product.price - discount_price
-            product.discount = False
-            product.price = price
-            product.save()
-
-        
-
+    
 
     context={'products': products ,
             'categories':categories,
@@ -95,10 +93,23 @@ def cart(request):
     order = Data['order']
     categories = Category.objects.all()
 
-    # for item in products:
-    #     if product.category.any_special_discount:
-    #         product.price=product.discount_price
-    context={'items':items,'order':order,'cartItems':cartItems,"categories":categories}
+    coupon=Cuppon.objects.all()
+    user=request.user
+    c=Customer.objects.get(user=user)
+    o=Order.objects.get(customer=c,complete=False)
+
+    if request.method=='POST':
+        q=request.POST['q']
+
+        for c in coupon:
+            if c.cuppon_name==q:
+                o.after_using_coupn=c.percent
+                o.save()
+    
+    save=o.total*(o.after_using_coupn/100)
+    
+
+    context={'items':items,'order':order,'cartItems':cartItems,"categories":categories,'save':save}
     return render(request,'myapp/cart-main.html',context)
 
 def checkout(request):
@@ -205,7 +216,6 @@ def processOrder(request):
             order.save()
 
 
-            # o1=Order.objects.get(customer=customer,transaction_id=transaction_id)
             a = []
             orderdProduct = []
             orderItems = OrderItem.objects.filter(order=order)
@@ -226,7 +236,7 @@ def processOrder(request):
 
             your_order = "<br>"
             for index, item in enumerate(customorder):
-                your_order += f'{index+1}: {item}<br>'
+                your_order += f'{index+1}: {item[0]}  qty - {item[1]} size - {item[2]} price - {item[3]}tk <br>'
 
             email_subject = "Your Order is Completed"
             email_body = f"""
@@ -234,34 +244,14 @@ def processOrder(request):
     We are thrilled to inform you that your order has been successfully processed!<br><br>
     <strong>Your Order Details:</strong><br>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Product Image</th>
-                <th>Product Name</th>
-                <th>Product Quantity</th>
-                <th>Selected Size</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{% for orderItem in customerOrder %}}
-            <tr>
-                <td>  <img src="{{{{ orderItem.4 }}}} " style="height: auto;width: 50px;"> </td>
-                <td>{{{{ orderItem.0 }}}} </td>
-                <td>{{{{ orderItem.1 }}}} </td>
-                <td>{{{{ orderItem.2 }}}} </td>
-                <td>{{{{ orderItem.3 }}}} </td>
-            </tr>
-            {{% endfor %}}
-        </tbody>
-    </table>
+   {your_order}
 
-    <strong>Total Amount:</strong> {{{{ data['form']['total'] }}}} Tk.<br><br>
+    <strong>Total Amount:</strong><span> { data['form']['total'] } Tk.<span><br><br>
     <strong>Payment Information:</strong><br>
     Please make the payment at your earliest convenience to ensure a smooth delivery process.<br><br>
     Thank you for choosing us! Your satisfaction is our priority.<br>
-    If you have any questions or concerns, feel free to reach out to us on our <a href="https://web.facebook.com/LONGGFASHION">Longg : লং </a>.<br><br>
+    If you have any questions or concerns, feel free to reach out to us on our <a href="https://web.facebook.com/LONGGFASHION">Longg : লং </a>.
+    Join our facebook group <a href="https://www.facebook.com/groups/350757722968576/?mibextid=c7yyfP">longg</a> <br><br>
     Best regards,<br>
     Longg : লং <br>
     01323-426706<br>

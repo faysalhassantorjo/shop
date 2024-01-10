@@ -80,12 +80,18 @@
             </div>
             <div class="col-md-6 col-lg-7 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black">
-                <div class="d-flex align-items-center mb-3 pb-1">
-                  <img src="{% static 'myapp/images/logo2.png' %}" style="max-height: 100px; position: absolute; top:-7px; left: 455px; width: auto;">
-                </div>
+             
                 <form action="login" method="POST">
                   {% csrf_token %}
                  
+                  <link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Satisfy&display=swap" rel="stylesheet">
+                  <div class="d-flex align-items-center mb-3 pb-1">
+                    <!-- <i class="fa-solid fa-paperclip" style="color: #ff6219;"></i> -->
+                    <a href="/" class="h1 fw-bold mb-0" style="font-family: 'Bebas Neue', sans-serif;
+                    font-family: 'Satisfy', cursive; color: #f74f06;">Longg</a>
+                  </div>
 
                   <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Sign into your account</h5>
 

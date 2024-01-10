@@ -129,12 +129,18 @@
 					<div class="col-lg-2 col-md-3 col-12">
 						<div class="right-bar">
 							<!-- Search Form -->
-							{% if user %}
+							{% if user.is_authenticated %}
 							<div class="sinlge-bar">
 								<span>hello <span style="color: #f74f06;">{{user}}!</span></span>
 							</div>
+							{% else %}
+							<div class="sinlge-bar">
+								<span><a href="{% url 'login' %}"  style="color: #f74f06;">login</a></span>
+							</div>
 							{% endif %}
+
 						
+							{% if user.is_authenticated %}
 							
 							<div class="sinlge-bar shopping">
 								<a href="{% url 'cart' %}" class="single-icon"><i class="ti-bag"></i> <span class="total-count">{{cartItems}}</span></a>
@@ -166,6 +172,7 @@
 								</div>
 								<!--/ End Shopping Item -->
 							</div>
+							{% endif %}
 						</div>
 					</div>
 				</div>
@@ -206,6 +213,7 @@
 													{% if user.is_authenticated and user.is_staff %}
 													<li><a href="{% url 'addProduct' %}">Add Product</a></li>				
 													<li><a href="{% url 'addCategory' %}">Add Category</a></li>
+													<li><a href="{% url 'customerOrderView' %}">View Order</a></li>
 													{% endif %}
 
 													<li><a href="#">Shop<i class="ti-angle-down"></i></a>
@@ -233,6 +241,12 @@
 	<!--/ End Header -->
 	{% if hero_slide %}
 
+	<style>
+		.x:hover{
+			background-color: #b1b1b1;
+			color: #000000;
+		}
+	</style>
 	<section class="hero-slider">
 		<!-- Single Slider -->
 		<div class="single-slider" style="background-image: url('{{hero_slide.imageURL}}');" >
@@ -243,16 +257,23 @@
 							<div class="row">
 								<div class="col-lg-7 col-12">
 									<div class="hero-text"> 
-								 <h1><span style="color: #fff;">Explore Our New Collection </span>{{hero_slide.name}}</h1>
+								 <!-- <h1><span style="color: #fff;">Explore Our New Collection </span>{{hero_slide.name}}</h1>
 									
 										<div class="button">
 									
-											<a href="{% url 'product_list' hero_slide.id %}" class="btn">Shop Now!</a>
+											<a href="" class="btn">Shop Now!</a>
 											
 									
-										</div> 
-									</div>
+										</div>  -->
+
+									<!-- <h6 style="color: #f74f06;">{{hero_slide.name}}</h6> -->
+                                    <h2 style="color: #f74f06;">{{hero_slide.name}}</h2>
+                                    <!-- <p style="color: #fff;">A specialist label creating luxury essentials. Ethically crafted with an unwavering
+                                    commitment to exceptional quality.</p> -->
+									<p></p>
+                                    <a href="{% url 'product_list' hero_slide.id %}" class="x" style="color: #fff; border:1px solid #ffffff; padding: 10px;">Shop now <span class="arrow_right"></span></a>
 								</div>
+							</div>
 						
 							</div>
 						</div>
@@ -367,7 +388,7 @@ opacity: 0;
 					<div class="col-12">
 						<div class="row">
 							{% for category in categories %}
-							{% if not category.hero_slide %}
+							{% if not category.hero_slide and not category.special_collection %}
 		
 							<div class="col-lg-4 col-md-4 col-sm-4 col-6 mt-4">
 								<a href="{% url 'product_list' category.id %}" > <div class = "card">
@@ -394,7 +415,6 @@ opacity: 0;
     </div>
 
 
-	{% if special_discount %}
 	<section class="midium-banner  mt-5">
 		<div class="container">
 			<div class="row">
@@ -407,26 +427,23 @@ opacity: 0;
 				</div>
 			</div>
 			<div class="row">
-				<!-- Single Banner  -->
 				{% for special_discount in special_discounts %}
 				{% if special_discount is not hero_slide %}
-				<div class="col-lg-6 col-md-6 col-12">
+				<div class="col-lg-6 col-md-6 col-12 mt-5">
 					<div class="single-banner">
-						<img src="{{special_discount.imageURL}}" alt="#" style="width:600px; height: 370px;">
+						<img src="{{special_discount.imageURL}}" alt="#" style="width:600px; height: auto;">
 						<div class="content">
 							<p>{{special_discount}} Collection's</p>
-							<h3>Man's items <br>Up to<span> {{special_discount.special_discount}}%</span></h3>
+							<h3>{{special_discount.superCategory}}'s items <br>Up to<span> {{special_discount.special_discount}}%</span></h3>
 							<a href="{% url 'product_list' special_discount.id %}">Shop Now</a>
 						</div>
 					</div>
 				</div>
 				{% endif %}
-				<!-- /End Single Banner  -->
 				{% endfor %}
 			</div>
 		</div>
 	</section>
-	{% endif %}
 	
 	
 	
@@ -442,6 +459,7 @@ opacity: 0;
 				</div>
 				{% endif %}
 			</div>
+			<div class="container">
 			<div class="row">
 				<!-- Single Banner  -->
 				{% for collection in special_collection %}
@@ -450,14 +468,31 @@ opacity: 0;
 						<img src="{{collection.imageURL}}" alt="#" style="object-fit: contain;">
 						<div class="content">
 							<p style="font-size: 2rem;">{{collection.name}}</p>
-							<!-- <h3>Summer travel <br> collection</h3> -->
 							<a style="font-size: 1rem;" href="{% url 'product_list' collection.id %}">Discover Now</a>
 						</div>
 					</div>
-				</div>
+	
+
+				<!-- <div class="card bg-dark text-white">
+					<img src="{{collection.imageURL}}" class="card-img" alt="Stony Beach"/>
+					<div class="card-img-overlay">
+					  <h2 style="width: bold; color: #f74f06;">
+						{{collection.name}}
+					  </h2>
+					  <p class="card-text">
+						This is a wider card with supporting text below as a natural lead-in to additional
+						content. This content is a little bit longer.
+					  </p>
+							<a style="font-size: 1rem;" href="{% url 'product_list' collection.id %}">Discover Now</a>
+							<p class="card-text"></p>
+					</div>
+
+				  </div> -->
+				  </div>
 				{% endfor %}
 				
 			</div>
+		</div>
 		</div>
 	</section>
 	<!-- End Small Banner -->
@@ -482,14 +517,24 @@ opacity: 0;
 					{% for product in products %}
 						<div class="single-product">
 							<div class="product-img">
+
 								<a href="{% url 'product' product.id %}">
+
 									<img class="default-img" src="{{product.imageURL}}" alt="#">
-									<img class="hover-img" src="{{product.imageURL}}" alt="#">
-									<span class="out-of-stock">Hot</span>
+									{% if product.imageURL2 %}
+									<img class="hover-img" src="{{product.imageURL2}}" alt="#">
+									{% endif %}
+									{% if product.instock %}
+									{% if product.discount_percent %}
+									<span class="new">{{product.discount_percent}}% off</span>
+									{%endif%}
+									{% else %}
+									<span class="out-of-stock">Out of Stock</span>
+									{% endif %}
 								</a>
 								<div class="button-head">
 									<div class="product-action">
-										<a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="{% url 'product' product.id %}"><i class=" ti-eye"></i><span>Quick Shop</span></a>
+										<!-- <a data-toggle="modal" data-target="#exampleModal" title="Quick View" href="{% url 'product' product.id %}"><i class=" ti-eye"></i><span>Quick Shop</span></a> -->
 									
 									</div>
 									<div class="product-action-2">
@@ -500,8 +545,14 @@ opacity: 0;
 							<div class="product-content text-center">
 								<span href="{% url 'product' product.id %}">{{product.name}}</span>
 								<div class="product-price">
-									<span><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.price}}</span>
+									{% if product.discount_percent %}
+								<del>	<span><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.update_price}}</span></del>&nbsp;&nbsp;
+									{% endif %}
+									<span style="font-size: 1.1rem;"><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.price}}</span>
+
+
 								</div>
+
 							</div>
 						</div>
 					{% endfor %}
@@ -533,34 +584,7 @@ opacity: 0;
 						</div>
 						<!-- End Single Widget -->
 					</div>
-					<div class="col-lg-0 col-md-6 col-12">
-						<!-- Single Widget -->
-						<!-- <div class="single-footer links">
-							<h4>Information</h4>
-							<ul>
-								<li><a href="#">About Us</a></li>
-								<li><a href="#">Faq</a></li>
-								<li><a href="#">Terms & Conditions</a></li>
-								<li><a href="#">Contact Us</a></li>
-								<li><a href="#">Help</a></li>
-							</ul>
-						</div> -->
-						<!-- End Single Widget -->
-					</div>
-					<div class="col-lg-0 col-md-6 col-12">
-						<!-- Single Widget -->
-						<!-- <div class="single-footer links">
-							<h4>Customer Service</h4>
-							<ul>
-								<li><a href="#">Payment Methods</a></li>
-								<li><a href="#">Money-back</a></li>
-								<li><a href="#">Returns</a></li>
-								<li><a href="#">Shipping</a></li>
-								<li><a href="#">Privacy Policy</a></li>
-							</ul>
-						</div> -->
-						<!-- End Single Widget -->
-					</div>
+					
 					<div class="col-lg-6 col-md-6 col-12">
 						<!-- Single Widget -->
 						<div class="single-footer social">
@@ -587,7 +611,7 @@ opacity: 0;
 				</div>
 			</div>
 		</div>
-		<!-- End Footer Top -->
+		<!-- End Footer Top
 		<div class="copyright">
 			<div class="container">
 				<div class="inner">
@@ -599,13 +623,13 @@ opacity: 0;
 						</div>
 						<div class="col-lg-6 col-12">
 							<div class="right">
-								<!-- <img src="images/payments.png" alt="#"> -->
+
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</footer>
 		<!-- Jquery -->
     <script src="{% static 'myapp/js2/js.js' %}"></script>

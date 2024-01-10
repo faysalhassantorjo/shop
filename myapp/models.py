@@ -8,6 +8,7 @@ class Category(models.Model):
     image = models.ImageField(null=True, blank=True)
     special_collection=models.BooleanField(default=False,null=True, blank=False)
     any_special_discount=models.BooleanField(default=False, null=True,blank=False)
+    superCategory=models.CharField(max_length=100, null=True,blank=True)
 
     hero_slide=models.BooleanField(default=False,null=True,blank=False)
 
@@ -28,23 +29,46 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category)
     description=models.TextField(null=True,blank=True)
+
+    superCategory=models.CharField(max_length=100, null=True,blank=True)
 
     image = models.ImageField(null=True, blank=True)
     image2 = models.ImageField(null=True, blank=True)
     hot_product=models.BooleanField(default=False,null=True, blank=False)
     discount_percent=models.IntegerField(default=0)
     discount=models.BooleanField(default=True,null=True,blank=False)
-
+    main_price=models.IntegerField(default=0,null=True,blank=True)
     price = models.IntegerField(default=0)
     instock=models.IntegerField(default=0)
+
+
     def __str__(self):
        
         return str(self.name)
 
 
-    
+    def update_price(self):
+        if self.discount:
+            discount = float(self.price * (self.discount_percent / 100))
+            discounted_price = float(self.price - discount)
+            self.main_price=self.price
+
+            self.discount=False
+            self.price = discounted_price
+            return discounted_price
+        else:
+            discount = float(self.main_price * (self.discount_percent / 100))
+            discounted_price = self.price - discount
+
+            return discount+self.price
+
+
+    def save(self, *args, **kwargs):
+        calculated_price = self.update_price()  
+        super().save(*args, **kwargs)
+
 
     @property
     def imageURL(self):
@@ -91,10 +115,24 @@ class Order(models.Model):
      
         orederitems = self.orderitem_set.all()
         total = sum(item.get_total for item in orederitems)
+        total-=total*(self.after_using_coupn/100)
+
         return total
+    @property
+    def total(self):
+        
+        orederitems = self.orderitem_set.all()
+        total = sum(item.get_total for item in orederitems)
+
+        return total
+
+    @property
     def coupon_uses_total(self):
-            if self.after_using_coupn and self.any_coupon:
-                return self.after_using_coupn
+        orederitems = self.orderitem_set.all()
+        total = sum(item.get_total for item in orederitems)
+        
+        total-=total*(self.after_using_coupn/100)
+        return total
 
     @property
     def get_cart_items(self):

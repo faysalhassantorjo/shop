@@ -1768,7 +1768,7 @@ Version:1.0
   transition: opacity 0.5s ease, transform 2s cubic-bezier(0, 0, 0.44, 1.18), -webkit-transform 2s cubic-bezier(0, 0, 0.44, 1.18);
 }
 .single-product .product-img a span.price-dec {
-	background-color: #f74f06;
+	background-color: #a30000;
 	display: inline-block;
 	font-size: 11px;
 	color: #fff;
@@ -1783,9 +1783,11 @@ Version:1.0
 	border-radius: 30px;
 	height: 26px;
 	line-height: 25px;
+	z-index: 9;
+
 }
 .single-product .product-img a span.new {
-	background-color: #8493ca;
+	background-color: #f74f06;
 	display: inline-block;
 	font-size: 11px;
 	color: #fff;
@@ -1800,9 +1802,10 @@ Version:1.0
 	border-radius: 30px;
 	height: 26px;
 	line-height: 24px;
+	z-index: 9;
 }
 .single-product .product-img a span.out-of-stock {
-	background-color: #ed1b24;
+	background-color: #ff0000;
 	display: inline-block;
 	font-size: 11px;
 	color: #fff;
