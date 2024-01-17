@@ -1,5 +1,5 @@
 from django.db import models
-from datetime import datetime
+from django.utils.timezone import now
 from django.contrib.auth.models import User
 import json
 
@@ -96,7 +96,7 @@ class Customer(models.Model):
 
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
-    date_order = models.DateTimeField(default=datetime.now, db_index=True)
+    date_order = models.DateTimeField(default=now, blank=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
     transaction_id = models.CharField(max_length=200, null=True)
     any_coupon=models.BooleanField(default=False,null=True,blank=False)
@@ -148,7 +148,7 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     quantity = models.IntegerField(default=0, null=True, blank=True)
 
-    date_added=models.DateTimeField(default=datetime.now)
+    date_added=models.DateTimeField(default=now,blank=True)
     size=models.CharField(max_length=10)
     transaction_id = models.CharField(max_length=200, null=True)
 
@@ -173,7 +173,7 @@ class ShippingAddress(models.Model):
     address = models.CharField(max_length=100)
     email=models.EmailField(null=True)
     phonNumber = models.CharField(max_length=100)
-    date_added = models.DateTimeField(default=datetime.now)
+    date_added = models.DateTimeField(default=now,blank=True)
 
     def __str__(self):
         return self.address
@@ -186,7 +186,7 @@ class CustomerOrder(models.Model):
     shipping = models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, blank=True, null=True)
     # orderItem = models.CharField(max_length=500) 
     total_tk=models.CharField(max_length=100)
-    date_added = models.DateTimeField(default=datetime.now)
+    date_added = models.DateTimeField(default=now,blank=True)
     twoDAr=models.CharField(default=None,blank=True,max_length=500)
     def __str__(self):
         return f'Order No: {self.id}'

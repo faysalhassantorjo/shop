@@ -47,9 +47,9 @@
 										
 								<a href="{% url 'product' product.id %}">
 
-									<img class="default-img" src="{{product.imageURL}}" alt="#">
+									<img class="default-img" src="{{product.imageURL}}" loading="lazy" alt="#">
 									{% if product.imageURL2 %}
-									<img class="hover-img" src="{{product.imageURL2}}" alt="#">
+									<img class="hover-img" src="{{product.imageURL2}}" loading="lazy" alt="#">
 									{% endif %}
 									{% if product.instock %}
 									{% if product.discount_percent %}
@@ -71,12 +71,12 @@
 										</div>
 									</div>
 									<div class="product-content text-center">
-										<h3><a href="{% url 'product' product.id %} ">{{product.name}}</a></h3>
+										<h3><a href="{% url 'product' product.id %}" style="font-size: 1.2rem;">{{product.name}}</a></h3>
 										<div class="product-price">
 											{% if product.discount_percent %}
-										<del>	<span><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.update_price}}</span></del>&nbsp;&nbsp;
+										<del>	<span style="opacity: .8; font-size: .8rem;"><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.update_price}}</span></del>&nbsp;&nbsp;
 											{% endif %}
-											<span style="font-size: 1.1rem;"><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.price}}</span>
+											<span style="font-size: 1rem; opacity: .8;"><i class="fa-solid fa-bangladeshi-taka-sign"></i>{{product.price}}</span>
 		
 		
 										</div>

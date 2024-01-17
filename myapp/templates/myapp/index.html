@@ -392,7 +392,7 @@ opacity: 0;
 		
 							<div class="col-lg-4 col-md-4 col-sm-4 col-6 mt-4">
 								<a href="{% url 'product_list' category.id %}" > <div class = "card">
-							<img src="{{ category.imageURL }}" alt="">
+							<img src="{{ category.imageURL }}" loading="lazy" alt="">
 								<div class="card-content">
 								  <h2 style="width: bold; color: #f74f06;">
 									{{category}}
@@ -415,7 +415,7 @@ opacity: 0;
     </div>
 
 
-	<section class="midium-banner  mt-5">
+	<!-- <section class="midium-banner  mt-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-12">
@@ -443,7 +443,7 @@ opacity: 0;
 				{% endfor %}
 			</div>
 		</div>
-	</section>
+	</section> -->
 	
 	
 	
@@ -520,9 +520,9 @@ opacity: 0;
 
 								<a href="{% url 'product' product.id %}">
 
-									<img class="default-img" src="{{product.imageURL}}" alt="#">
+									<img class="default-img" src="{{product.imageURL}}" loading="lazy" alt="#">
 									{% if product.imageURL2 %}
-									<img class="hover-img" src="{{product.imageURL2}}" alt="#">
+									<img class="hover-img" src="{{product.imageURL2}}"  loading="lazy" alt="#">
 									{% endif %}
 									{% if product.instock %}
 									{% if product.discount_percent %}
@@ -600,9 +600,9 @@ opacity: 0;
 							</div>
 							<!-- End Single Widget -->
 							<ul>
-								<li><a href="#"><i class="ti-facebook"></i></a></li>
-								<li><a href="#"><i class="ti-twitter"></i></a></li>
-								<li><a href="#"><i class="ti-flickr"></i></a></li>
+								<li><a href="https://web.facebook.com/LONGGFASHION"><i class="ti-facebook"></i></a></li>
+								<!-- <li><a href="#"><i class="ti-twitter"></i></a></li>
+								<li><a href="#"><i class="ti-flickr"></i></a></li> -->
 								<li><a href="#"><i class="ti-instagram"></i></a></li>
 							</ul>
 						</div>

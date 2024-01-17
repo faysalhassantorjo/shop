@@ -19,16 +19,19 @@ def index(request):
     discounted_product = Product.objects.filter(discount_percent__gt=30)
     special_collection=Category.objects.filter(special_collection=True)
     special_discount =Category.objects.filter(any_special_discount=True)
-    hero=Category.objects.get(hero_slide=True)
+    try:
+        hero=Category.objects.get(hero_slide=True)
+    except:
+        hero={}
 
-    print('asdf',len(special_discount))
-    for banner in special_discount:
-        print('banner name',banner.name)
-        for product in discounted_product:
-            if banner.superCategory and product.superCategory ==None:
-                continue
-            if banner.superCategory==product.superCategory:
-                product.category.add(banner)
+    # print('asdf',len(special_discount))
+    # for banner in special_discount:
+    #     print('banner name',banner.name)
+    #     for product in discounted_product:
+    #         if banner.superCategory and product.superCategory ==None:
+    #             continue
+    #         if banner.superCategory==product.superCategory:
+    #             product.category.add(banner)
  
     
 
@@ -152,6 +155,9 @@ def updatItem(request):
     elif action == 'remove':
         orderItem.quantity = (orderItem.quantity - 1)
         product.instock = (product.instock + 1)
+    
+    elif action == 'delete':
+        orderItem.quantity=0
 
     orderItem.save()
     product.save()

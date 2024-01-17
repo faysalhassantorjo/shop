@@ -121,7 +121,10 @@
                     					{% for item in items %}
 
 										<li>
-											<a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+											<button type="button" class="btn-number update-cart remove"  style="border: none;background: none;"
+											data-action="delete" data-size={{item.size}} data-product={{item.product.id}}>
+						<i class="fa fa-remove"></i>
+											</button>
 											<a class="cart-img" href="#"><img src="{{item.product.imageURL}}" alt="#"></a>
 											<h4><a href="#">{{item.product.name}}</a></h4>
 											<p class="quantity">{{item.quantity}}x - <span class="amount">TK{{item.product.price}}</span></p>
